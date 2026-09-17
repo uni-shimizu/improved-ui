@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>B2 改善されたUI体験</title>
+<style>
+  :root{--bg:#fff;--ink:#24333c;--sub:#5d6a72;--line:#d9e0e4;--panel:#f5f7f8;--head:#445661;--ok:#e7f2ea}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:var(--head);color:#fff;padding:16px 20px}
+  header h1{margin:0;font-size:1.35rem}
+  header p{margin:6px 0 0;font-size:.95rem}
+  main{max-width:980px;margin:24px auto;padding:0 18px 28px}
+  .mission,.end{border:1px solid var(--line);padding:14px 16px;background:#fff}
+  .mission strong{display:block;margin-bottom:6px}
+  .app{border:1px solid var(--line);background:#fff;margin-top:18px;overflow:hidden}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--panel);border-bottom:1px solid var(--line);gap:16px;flex-wrap:wrap}
+  .brand{font-weight:700;font-size:1.05rem}
+  .menu{font-size:14px;color:#445661;display:flex;gap:14px;flex-wrap:wrap}
+  .wrap{padding:24px 24px 28px}
+  .status{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--line);background:var(--panel);border-radius:8px;margin-bottom:22px}
+  .status strong{font-size:16px}
+  .status-badge{display:inline-flex;align-items:center;justify-content:center;padding:4px 10px;border-radius:999px;background:var(--ok);border:1px solid #bfd3c4;font-weight:700}
+  .field{margin:18px 0 20px}
+  .field label{display:block;font-size:16px;font-weight:700;margin-bottom:8px}
+  select{font-size:16px;padding:10px 12px;border:1px solid #bcc7cd;border-radius:6px;width:100%;max-width:360px;background:#fff}
+  .info{font-size:16px;line-height:1.8;color:#334148;max-width:640px;margin-bottom:18px}
+  .action{display:inline-block;padding:14px 24px;border:1px solid #657985;background:#e8eef1;color:#24333c;border-radius:10px;font-size:17px;font-weight:700;cursor:pointer}
+  .note{font-size:14px;color:#4e6069;margin-top:10px}
+  .msg{min-height:24px;margin-top:14px;color:#6a3a3a;font-size:.95rem}
+  .end{display:none;margin-top:18px}
+</style>
+</head>
+<body>
+<header>
+  <h1>学校購買ページ</h1>
+  <p>Activity B2｜改善された画面で同じ操作をする</p>
+</header>
+<main>
+  <section class="mission"><strong>MISSION</strong>商品Aを選んで注文してください。</section>
+  <section class="app" id="taskArea">
+    <div class="top">
+      <div class="brand">校内注文ページ</div>
+      <div class="menu"><span>ホーム</span><span>商品一覧</span><span>利用案内</span></div>
+    </div>
+    <div class="wrap">
+      <div class="status">
+        <strong>受付状況</strong>
+        <span class="status-badge">○ 受付中</span>
+      </div>
+
+      <div class="field">
+        <label for="product">注文する商品</label>
+        <select id="product">
+          <option value="">商品を選んでください</option>
+          <option value="A">商品A</option>
+          <option value="B">商品B</option>
+          <option value="C">商品C</option>
+        </select>
+      </div>
+
+      <div class="info">注文したい商品を選んだあと、下の「注文する」ボタンを押してください。受付状況は、文字と記号で確認できます。</div>
+
+      <button class="action" id="orderButton">注文する</button>
+      <div class="note">選んだ商品の注文結果は、この画面に表示されます。</div>
+    </div>
+  </section>
+  <div class="msg" id="msg" aria-live="polite"></div>
+  <section class="end" id="endScreen">
+    <h2>注文しました。</h2>
+    <p>操作はここまでです。</p>
+    <p>この画面のまま、先生の合図を待ちましょう。</p>
+  </section>
+</main>
+<script>
+  const product = document.getElementById('product');
+  const orderButton = document.getElementById('orderButton');
+  const msg = document.getElementById('msg');
+  const taskArea = document.getElementById('taskArea');
+  const end = document.getElementById('endScreen');
+
+  orderButton.addEventListener('click', ()=>{
+    if(product.value === 'A'){
+      taskArea.style.display='none';
+      msg.textContent='';
+      end.style.display='block';
+    } else if(product.value === ''){
+      msg.textContent='商品を選んでください。';
+    } else {
+      msg.textContent='MISSIONは「商品Aを選んで注文する」です。';
+    }
+  });
+</script>
+</body>
+</html>
